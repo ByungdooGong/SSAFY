@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.mvc.mapper.BoardMapper">
+	
+	<resultMap type="Food" id="FoodResult">
+		<result column="fid" property="code"/>
+		<result column="fname" property="name"/>
+		<result column="supportpereat" property="supportpereat"/>
+		<result column="calory" property="calory"/>
+		<result column="carbo" property="carbo"/>
+		<result column="protein" property="protein"/>
+		<result column="fat" property="fat"/>
+		<result column="sugar" property="sugar"/>
+		<result column="natrium" property="natrium"/>
+		<result column="chole" property="chole"/>
+		<result column="fattyacid" property="fattyacid"/>
+		<result column="transfat" property="transfat"/>
+		<result column="maker" property="maker"/>
+		<result column="material" property="material"/>
+		<result column="img" property="img"/>
+		<result column="fallergies" property="allergy"/>
+	</resultMap>
+	
+	<!-- ResultMap & Query tags... -->
+	<select id="searchAll" resultMap="FoodResult">
+		select * from food;
+	</select>	
+	
+	<select id="search" resultMap="FoodResult" parameterType="Integer">
+		select * from food where fid = #{code};
+	</select>
+	
+	<select id="searchByName" resultMap="FoodResult" parameterType="String">
+		select * from food where fname like #{word};
+	</select>
+
+	<select id="searchByMaker" resultMap="FoodResult" parameterType="String">
+		select * from food where maker like #{word};
+	</select>
+	
+	<select id="searchByMaterial" resultMap="FoodResult" parameterType="String">
+		select * from food where material like #{word};
+	</select>
+	
+	<select id="findMember" parameterType="String" resultType="String">
+		select id from member where id = #{param1} and pass = #{param2}; 
+	</select>
+
+	<select id="add" parameterType="String">
+		insert into member values (#{id}, #{password}, #{name}, #{phone});
+	</select>
+	
+	<select id="addAllergy" parameterType="String">
+		insert into allergy values (null, #{param1}, #{param2});
+	</select>
+	
+	<select id="eats" parameterType="String">
+		insert into eats values (null, #{param1}, #{param2});
+	</select>
+	
+	<select id="allergiesInId" parameterType="String" resultType="String">
+		select allergies from allergy where mid = #{id};
+	</select>
+	
+	<select id="allergiesInFood" parameterType="String" resultType="String">
+		select fallergies from food where fid = #{code};
+	</select>
+	
+	<select id="myeats" parameterType="String" resultMap="FoodResult">
+		select * from food where fid in (select fid from eats where mid=#{id}) ;
+	</select>
+ 	
+ 	<insert id="pick">
+        insert into pick values(null, #{param1}, #{param2})
+    </insert>
+    
+    <select id="mypick" parameterType="String" resultMap="FoodResult">
+        select * from food where fid in (select fid from pick where mid=#{mid})
+    </select>
+ 	
+</mapper>
+
+
