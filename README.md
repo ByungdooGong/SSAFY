@@ -14,7 +14,7 @@
 ![품목리스트](./img/list.JPG)
 <전체 품목리스트>
 
-![전체검색](./img/searchALL.JPG)
+![전체검색](./img/searchAll.JPG)
 <전체 검색 기능>
 
 ![이름명검색](./img/searchByName.JPG)
